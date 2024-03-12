@@ -10,16 +10,16 @@ require('dotenv').config();
 // const wallet = new Keypair();
 // const publicKey = new PublicKey(wallet._keypair.publicKey);
 // const privateKey = wallet._keypair.secretKey;
-const publicKey = new PublicKey(process.env.PUBLIC_KEY);
-const privateKey = process.env.PRIVATE_KEY;
+const publicKey = new PublicKey(process.env.SOL_PUBLIC_KEY);
+const privateKey = process.env.SOL_PRIVATE_KEY;
 
 // console.log('Wallet:', process.env.PUBLIC_KEY);
 // console.log('Public Key:', publicKey);
 // console.log('Private Key:', privateKey);
 
-const getWalletBalance = async () => {
+const getWalletBalance = async (clusterEnv) => {
     try {
-        const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+        const connection = new Connection(clusterApiUrl(clusterEnv), 'confirmed');
         const walletBalance = await connection.getBalance(publicKey);
         console.log('Wallet Balance:', walletBalance / LAMPORTS_PER_SOL);
     } catch (error) {
@@ -27,9 +27,9 @@ const getWalletBalance = async () => {
     }
 };
 
-const  airDropSol = async () => {
+const  airDropSol = async (clusterEnv) => {
     try {
-        const connection = new Connection(clusterApiUrl('devnet'), 'confirmed');
+        const connection = new Connection(clusterApiUrl(clusterEnv), 'confirmed');
         const fromAirdropSignature = await connection.requestAirdrop(publicKey, 5 * LAMPORTS_PER_SOL);
         await connection.confirmTransaction(fromAirdropSignature);
         
@@ -39,8 +39,11 @@ const  airDropSol = async () => {
 }
 
 const main = async () => {
-    await getWalletBalance();
-    // await airDropSol();
+    await getWalletBalance("devnet");
+    await getWalletBalance("testnet");
+    await airDropSol("devnet");
+    await airDropSol("testnet");
+    
 }
 
 main();
