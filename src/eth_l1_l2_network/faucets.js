@@ -13,4 +13,16 @@ console.log(publicKey);
 const alchemy = new Alchemy(settings);
 
 // Access Alchemy Enhanced API requests
-alchemy.core.getTokenBalances(publicKey).then(console.log);
+try {
+    alchemy.core.getTokenBalances(publicKey).then((res) => {
+        // console.log(res.tokenBalances);
+        console.log(res.tokenBalances.length);
+        for (let i = 0; i < res.tokenBalances.length; i++) {
+            console.log(res.tokenBalances[i].contractAddress);
+            console.log(parseInt(res.tokenBalances[i].tokenBalance, 16));
+        }
+    })
+
+} catch (error) {
+    console.error('Error:', error);
+}
