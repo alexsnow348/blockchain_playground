@@ -6,7 +6,7 @@ const publicKey = process.env.ETH_PUBLIC_KEY;
 
 const settings = {
     apiKey: alchemyApiKey, // Replace with your Alchemy API Key.
-    network: Network.ETH_MAINNET, // Replace with your network.
+    network: Network.ETH_SEPOLIA, // Replace with your network.
 };
 
 console.log(publicKey);
