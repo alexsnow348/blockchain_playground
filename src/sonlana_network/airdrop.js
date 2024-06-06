@@ -40,9 +40,9 @@ const  airDropSol = async (clusterEnv) => {
 
 const main = async () => {
     await getWalletBalance("devnet");
-    await getWalletBalance("testnet");
     await airDropSol("devnet");
-    await airDropSol("testnet");
+    // await getWalletBalance("testnet");
+    // await airDropSol("testnet");
     
 }
 
